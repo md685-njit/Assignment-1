@@ -45,7 +45,7 @@ Your numbers will not match a classmate's exactly. Both models are sampled at te
 - **Later work builds on it.** Later assignments and the semester project ask you to change and extend a harness like this one. You need to be able to run one and read one first.
 - **The setup carries forward.** Python, Docker, Git, and an API key are your working environment for the rest of the course. Getting them working now, with nothing else to worry about, is deliberate.
 
-## How the repository connects to Week 3
+## How the Assignment connects to Week 3
 
 | Week 3 idea (slide title) | Where it lives in the repository |
 | --- | --- |
@@ -75,8 +75,7 @@ The repository `cs690-a1-controlled-eval` contains:
 
 ## What you need
 
-- A 64-bit computer on which you can install software: Windows 11, or Windows 10 version 22H2; one of the three most recent versions of macOS; or Linux. Docker needs at least 8 GB of memory on Windows and 4 GB on a Mac, hardware virtualization turned on, and several gigabytes of free disk space.
-- Python 3.14, Docker Desktop (Docker Engine on Linux), Git, and a code editor. Visual Studio Code is a good free choice. Any Python from 3.11 through 3.14 works. Python 3.15 does not work with this harness yet, because a library it depends on has not caught up.
+-Python 3.14, Docker Desktop (Docker Engine on Linux), Git, and a code editor. Visual Studio Code is a good free choice. Any Python from 3.11 through 3.14 works. Python 3.15 does not work with this harness yet, because a library it depends on has not caught up.
 - A GitHub account. The repository you create for this assignment is public, so anyone can read it.
 - An OpenAI API account with prepaid credit. A ChatGPT subscription does not include API use. OpenAI's smallest credit purchase is $5, and at the prices OpenAI listed in September 2026 the full experiment uses well under one dollar of it.
 
