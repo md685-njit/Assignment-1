@@ -1,0 +1,31 @@
+{
+  "experiment_id": "a1-controlled-eval-fall2026",
+  "samples_per_task": 3,
+  "k_values": [1, 2],
+  "confidence": 0.95,
+  "bootstrap_repetitions": 5000,
+  "bootstrap_seed": 690,
+  "timeout_seconds": 5,
+  "conditions": [
+    {
+      "id": "A",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "temperature": 1.0,
+      "top_p": null,
+      "seed": null,
+      "effort": "none",
+      "max_output_tokens": 800
+    },
+    {
+      "id": "B",
+      "provider": "openai",
+      "model": "gpt-5.6-terra",
+      "temperature": 1.0,
+      "top_p": null,
+      "seed": null,
+      "effort": "none",
+      "max_output_tokens": 800
+    }
+  ]
+}

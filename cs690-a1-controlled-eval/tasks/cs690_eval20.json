@@ -1,0 +1,240 @@
+{
+  "dataset_id": "CS690-Eval20",
+  "version": "fall2026-v1",
+  "tasks": [
+    {
+      "id": "A1-001",
+      "entry_point": "clamp_int",
+      "prompt": "Write clamp_int(x, lower, upper). Inputs are integers and lower <= upper. Return lower when x is below lower, upper when x is above upper, otherwise return x.",
+      "tests": [
+        "assert clamp_int(5, 0, 10) == 5",
+        "assert clamp_int(-2, 0, 10) == 0",
+        "assert clamp_int(99, 0, 10) == 10",
+        "assert clamp_int(0, 0, 10) == 0",
+        "assert clamp_int(10, 0, 10) == 10"
+      ]
+    },
+    {
+      "id": "A1-002",
+      "entry_point": "dedupe_preserve_order",
+      "prompt": "Write dedupe_preserve_order(items). items is a list of hashable values. Return a new list containing only the first occurrence of each value, preserving first-appearance order. Do not modify items.",
+      "tests": [
+        "assert dedupe_preserve_order([3, 1, 3, 2, 1]) == [3, 1, 2]",
+        "assert dedupe_preserve_order([]) == []",
+        "assert dedupe_preserve_order(['a', 'a', 'b']) == ['a', 'b']",
+        "assert dedupe_preserve_order([1, 2, 3]) == [1, 2, 3]"
+      ]
+    },
+    {
+      "id": "A1-003",
+      "entry_point": "balanced_delimiters",
+      "prompt": "Write balanced_delimiters(text). Consider only (), [], and {} characters and ignore all other characters. Return True exactly when delimiters are correctly nested and matched; otherwise return False.",
+      "tests": [
+        "assert balanced_delimiters('a(b[c]{d})') is True",
+        "assert balanced_delimiters('([)]') is False",
+        "assert balanced_delimiters('(()') is False",
+        "assert balanced_delimiters('no delimiters') is True",
+        "assert balanced_delimiters('}{') is False"
+      ]
+    },
+    {
+      "id": "A1-004",
+      "entry_point": "chunked",
+      "prompt": "Write chunked(items, size). size is an integer. For size > 0, return consecutive sublists of at most size items, with a shorter final sublist allowed. Return [] for an empty input. Raise ValueError when size <= 0. Do not modify items.",
+      "tests": [
+        "assert chunked([1, 2, 3, 4, 5], 2) == [[1, 2], [3, 4], [5]]",
+        "assert chunked([], 3) == []",
+        "assert chunked([1, 2], 5) == [[1, 2]]",
+        "expect_raises(ValueError, chunked, [1], 0)",
+        "expect_raises(ValueError, chunked, [1], -2)"
+      ]
+    },
+    {
+      "id": "A1-005",
+      "entry_point": "merge_intervals",
+      "prompt": "Write merge_intervals(intervals). intervals is a list of two-element lists [start, end] with integer start <= end. Treat intervals as closed, so [1, 3] and [3, 5] overlap. Return a new list of merged non-overlapping intervals sorted by start. Do not modify intervals.",
+      "tests": [
+        "assert merge_intervals([[5, 7], [1, 3], [2, 4]]) == [[1, 4], [5, 7]]",
+        "assert merge_intervals([[1, 3], [3, 5]]) == [[1, 5]]",
+        "assert merge_intervals([]) == []",
+        "assert merge_intervals([[2, 2]]) == [[2, 2]]",
+        "assert merge_intervals([[1, 10], [2, 3], [4, 8]]) == [[1, 10]]"
+      ]
+    },
+    {
+      "id": "A1-006",
+      "entry_point": "rotate_left",
+      "prompt": "Write rotate_left(items, k). Return a new list rotated left by k positions. k may be negative or larger than the list length and must wrap modulo the list length. Return [] for an empty input. Do not modify items.",
+      "tests": [
+        "assert rotate_left([1, 2, 3, 4], 1) == [2, 3, 4, 1]",
+        "assert rotate_left([1, 2, 3, 4], 5) == [2, 3, 4, 1]",
+        "assert rotate_left([1, 2, 3, 4], -1) == [4, 1, 2, 3]",
+        "assert rotate_left([], 7) == []",
+        "assert rotate_left([1], 100) == [1]"
+      ]
+    },
+    {
+      "id": "A1-007",
+      "entry_point": "longest_run",
+      "prompt": "Write longest_run(items). Return the length of the longest consecutive run of equal values. Return 0 for an empty list.",
+      "tests": [
+        "assert longest_run([1, 1, 2, 2, 2, 1]) == 3",
+        "assert longest_run([]) == 0",
+        "assert longest_run(['x']) == 1",
+        "assert longest_run([1, 2, 3]) == 1",
+        "assert longest_run([False, False, False, True]) == 3"
+      ]
+    },
+    {
+      "id": "A1-008",
+      "entry_point": "parse_bool",
+      "prompt": "Write parse_bool(text). Strip surrounding whitespace and compare case-insensitively. Return True for true, 1, yes, on. Return False for false, 0, no, off. Raise ValueError for every other value.",
+      "tests": [
+        "assert parse_bool(' YES ') is True",
+        "assert parse_bool('off') is False",
+        "assert parse_bool('TrUe') is True",
+        "assert parse_bool('0') is False",
+        "expect_raises(ValueError, parse_bool, 'maybe')",
+        "expect_raises(ValueError, parse_bool, '')"
+      ]
+    },
+    {
+      "id": "A1-009",
+      "entry_point": "first_unique_index",
+      "prompt": "Write first_unique_index(text). Return the zero-based index of the first character whose total frequency in text is exactly one. Return -1 if there is no such character. Character comparison is case-sensitive.",
+      "tests": [
+        "assert first_unique_index('swiss') == 1",
+        "assert first_unique_index('aabb') == -1",
+        "assert first_unique_index('') == -1",
+        "assert first_unique_index('AaA') == 1",
+        "assert first_unique_index('z') == 0"
+      ]
+    },
+    {
+      "id": "A1-010",
+      "entry_point": "word_counts",
+      "prompt": "Write word_counts(text). Split text on whitespace. For each token, lowercase it and strip these ASCII punctuation characters from both ends: . , ; : ! ? double quote, single quote, ( ) [ ] { }. Omit tokens that become empty. Return a dict mapping normalized tokens to counts.",
+      "tests": [
+        "assert word_counts('Hello, hello! WORLD.') == {'hello': 2, 'world': 1}",
+        "assert word_counts('  [A] {a} (b)  ') == {'a': 2, 'b': 1}",
+        "assert word_counts('... !!!') == {}",
+        "assert word_counts(\"can't can't\") == {\"can't\": 2}"
+      ]
+    },
+    {
+      "id": "A1-011",
+      "entry_point": "group_anagrams",
+      "prompt": "Write group_anagrams(words). Words are ASCII strings. Two words belong to the same group when their lowercase letters sorted are identical. Preserve each original word exactly. Preserve input order within each group, and order groups by the first appearance of any member.",
+      "tests": [
+        "assert group_anagrams(['Tea', 'eat', 'tan', 'ate', 'Nat', 'bat']) == [['Tea', 'eat', 'ate'], ['tan', 'Nat'], ['bat']]",
+        "assert group_anagrams([]) == []",
+        "assert group_anagrams(['a', 'A', 'b']) == [['a', 'A'], ['b']]",
+        "assert group_anagrams(['ab', 'ba', 'abc']) == [['ab', 'ba'], ['abc']]"
+      ]
+    },
+    {
+      "id": "A1-012",
+      "entry_point": "transpose_rectangular",
+      "prompt": "Write transpose_rectangular(matrix). matrix is a list of row lists. Return the matrix transpose as a list of lists. Return [] for [] and for a matrix whose rows are all empty. Raise ValueError if row lengths differ. Do not modify matrix.",
+      "tests": [
+        "assert transpose_rectangular([[1, 2, 3], [4, 5, 6]]) == [[1, 4], [2, 5], [3, 6]]",
+        "assert transpose_rectangular([]) == []",
+        "assert transpose_rectangular([[], []]) == []",
+        "expect_raises(ValueError, transpose_rectangular, [[1], [2, 3]])",
+        "assert transpose_rectangular([[1], [2], [3]]) == [[1, 2, 3]]"
+      ]
+    },
+    {
+      "id": "A1-013",
+      "entry_point": "top_k_frequent",
+      "prompt": "Write top_k_frequent(items, k). items contains hashable values and k is a nonnegative integer. Return at most k distinct values ordered by descending frequency; break frequency ties by first appearance in items. If k exceeds the number of distinct values, return all distinct values. Return [] when k is 0.",
+      "tests": [
+        "assert top_k_frequent(['a', 'b', 'a', 'c', 'b', 'a'], 2) == ['a', 'b']",
+        "assert top_k_frequent(['x', 'y', 'z'], 2) == ['x', 'y']",
+        "assert top_k_frequent([1, 1, 2], 9) == [1, 2]",
+        "assert top_k_frequent([], 3) == []",
+        "assert top_k_frequent([1, 2], 0) == []"
+      ]
+    },
+    {
+      "id": "A1-014",
+      "entry_point": "rle_encode",
+      "prompt": "Write rle_encode(text). Return run-length encoding as a list of two-element lists [character, count] for consecutive identical characters. Preserve character case. Return [] for an empty string.",
+      "tests": [
+        "assert rle_encode('aaabbc') == [['a', 3], ['b', 2], ['c', 1]]",
+        "assert rle_encode('') == []",
+        "assert rle_encode('Aaa') == [['A', 1], ['a', 2]]",
+        "assert rle_encode('x') == [['x', 1]]"
+      ]
+    },
+    {
+      "id": "A1-015",
+      "entry_point": "window_sums",
+      "prompt": "Write window_sums(values, width). width is an integer. For width > 0, return sums of every contiguous window of exactly width elements. Return [] when width exceeds len(values). Raise ValueError when width <= 0.",
+      "tests": [
+        "assert window_sums([1, 2, 3, 4], 2) == [3, 5, 7]",
+        "assert window_sums([5, -1, 2], 3) == [6]",
+        "assert window_sums([1, 2], 3) == []",
+        "assert window_sums([], 1) == []",
+        "expect_raises(ValueError, window_sums, [1, 2], 0)"
+      ]
+    },
+    {
+      "id": "A1-016",
+      "entry_point": "flatten_one_level",
+      "prompt": "Write flatten_one_level(items). items is a list whose elements are lists. Concatenate those element lists into one new list, flattening exactly one level. Preserve any values nested deeper than one level unchanged. Do not modify items.",
+      "tests": [
+        "assert flatten_one_level([[1, 2], [3], [], [4, 5]]) == [1, 2, 3, 4, 5]",
+        "assert flatten_one_level([]) == []",
+        "assert flatten_one_level([[[1]], [[2, 3]]]) == [[1], [2, 3]]",
+        "assert flatten_one_level([[], ['a']]) == ['a']"
+      ]
+    },
+    {
+      "id": "A1-017",
+      "entry_point": "is_palindrome_normalized",
+      "prompt": "Write is_palindrome_normalized(text). Input is ASCII text. Ignore all characters that are not ASCII letters or digits, compare letters case-insensitively, and return whether the remaining sequence is a palindrome. An empty remaining sequence counts as a palindrome.",
+      "tests": [
+        "assert is_palindrome_normalized('A man, a plan, a canal: Panama!') is True",
+        "assert is_palindrome_normalized('race a car') is False",
+        "assert is_palindrome_normalized('12321') is True",
+        "assert is_palindrome_normalized('!!!') is True",
+        "assert is_palindrome_normalized('Aa') is True"
+      ]
+    },
+    {
+      "id": "A1-018",
+      "entry_point": "interval_intersection",
+      "prompt": "Write interval_intersection(a, b). a and b are closed integer intervals [start, end] with start <= end. Return their closed intersection as [start, end], including a one-point intersection when endpoints touch. Return None when they do not overlap.",
+      "tests": [
+        "assert interval_intersection([1, 5], [3, 7]) == [3, 5]",
+        "assert interval_intersection([1, 2], [2, 4]) == [2, 2]",
+        "assert interval_intersection([1, 2], [3, 4]) is None",
+        "assert interval_intersection([-5, -1], [-3, 2]) == [-3, -1]"
+      ]
+    },
+    {
+      "id": "A1-019",
+      "entry_point": "stable_partition",
+      "prompt": "Write stable_partition(items, pivot). items is a list of numbers. Return a new list with every value strictly less than pivot first, followed by every value greater than or equal to pivot. Preserve the original relative order within both groups. Do not modify items.",
+      "tests": [
+        "assert stable_partition([5, 1, 4, 2, 3], 3) == [1, 2, 5, 4, 3]",
+        "assert stable_partition([], 10) == []",
+        "assert stable_partition([3, 3, 2, 4], 3) == [2, 3, 3, 4]",
+        "assert stable_partition([-1, 2, -3, 0], 0) == [-1, -3, 2, 0]"
+      ]
+    },
+    {
+      "id": "A1-020",
+      "entry_point": "summarize_ranges",
+      "prompt": "Write summarize_ranges(nums). nums is a sorted list of strictly increasing integers. Convert each maximal consecutive run to a string. A run of one number is 'n'; a longer run is 'start-end'. Return the strings in input order. Return [] for an empty list.",
+      "tests": [
+        "assert summarize_ranges([1, 2, 3, 5, 7, 8]) == ['1-3', '5', '7-8']",
+        "assert summarize_ranges([]) == []",
+        "assert summarize_ranges([-3, -2, -1, 2]) == ['-3--1', '2']",
+        "assert summarize_ranges([4]) == ['4']",
+        "assert summarize_ranges([1, 3, 5]) == ['1', '3', '5']"
+      ]
+    }
+  ]
+}

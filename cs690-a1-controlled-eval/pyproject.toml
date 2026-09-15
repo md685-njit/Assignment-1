@@ -1,0 +1,42 @@
+# Python project settings for the harness.
+#
+# The setup command python -m pip install -e ".[dev]" reads this file.
+# It installs the pinned packages below and makes the harness package
+# importable from this folder.
+# The -e (editable) option means the installed package is this folder itself,
+# so the code you read is exactly the code that runs.
+
+[build-system]
+requires = ["setuptools==84.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cs690-a1-controlled-eval"
+version = "1.0.0"
+description = "CS 690 Assignment 1: controlled evaluation harness"
+# Python 3.11 through 3.14. As of September 2026 one of the libraries the
+# OpenAI client needs has no ready-made build for Python 3.15, so the
+# install would fail there with a compiler error. The upper limit turns
+# that into a clear message from pip instead.
+requires-python = ">=3.11,<3.15"
+# Exact versions, so every student installs the same client libraries.
+dependencies = [
+  "openai==3.3.1",       # client for the OpenAI API (the default conditions)
+  "anthropic==0.125.0",  # client for the Anthropic API (used only if the class switches)
+]
+
+[project.optional-dependencies]
+# Extra tools for development, installed by the [dev] part of the command.
+dev = [
+  "pytest==9.1.1",       # runs the tests in tests/
+]
+
+# Only the harness folder is part of the installed package.
+[tool.setuptools.packages.find]
+include = ["harness*"]
+
+# pytest looks for tests in tests/. The -ra option prints a short reason for
+# every test that is skipped or fails.
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
