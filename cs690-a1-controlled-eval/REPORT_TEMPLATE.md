@@ -1,11 +1,5 @@
 # CS 690 Assignment 1 Report: Replicating a Controlled Evaluation
 
-Name:
-
-Repository link:
-
-Commit SHA of the version you want graded:
-
 ## Part 1. Verification evidence
 
 Command:
