@@ -1,8 +1,6 @@
 # CS 690 Assignment 1: Controlled Evaluation Harness
 
-This repository holds the complete evaluation harness for Assignment 1. What you submit, and how it is graded, is described in `A1_HANDOUT.md`, which came in the same download. This file tells you how to install everything, how to run every command, and how to read the code.
-
-Read this file from top to bottom before you run anything. The steps are in the order you need them.
+please read the A1_HANDOOUT.md for the assignment description then this readme
 
 If you are stuck on installation for more than about thirty minutes, stop and contact the instructor with the exact error message. Setup problems are normal on a first assignment, and they are much quicker to solve together.
 
