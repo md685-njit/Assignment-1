@@ -1,6 +1,8 @@
 # CS 690 Assignment 1: Controlled Evaluation Harness
 
-please read the A1_HANDOOUT.md for the assignment description then this readme
+This repository holds the complete evaluation harness for Assignment 1. What you submit, and how it is graded, is described in `A1_HANDOUT.md`, which came in the same download. This file tells you how to install everything, how to run every command, and how to read the code.
+
+Read this file from top to bottom before you run anything. The steps are in the order you need them.
 
 If you are stuck on installation for more than about thirty minutes, stop and contact the instructor with the exact error message. Setup problems are normal on a first assignment, and they are much quicker to solve together.
 
@@ -8,12 +10,12 @@ If you are stuck on installation for more than about thirty minutes, stop and co
 
 You will not write or change any code. Every function is finished, commented, and tested. You will:
 
-1. install the tools and put this code in a private GitHub repository (sections 1 to 6);
+1. install the tools and put this code in a public GitHub repository (sections 1 to 6);
 2. confirm your setup with one command (section 7);
 3. run the test suite (section 8);
 4. read the code until you can explain how it works (section 9);
 5. run the fixed experiment that compares two models on the same 20 problems (sections 10 to 13);
-6. write your report and provenance ledger (section 14).
+6. write your answers in `REPORT_TEMPLATE.md` and submit your repository link (section 14).
 
 ## Before you start: the terminal
 
@@ -52,16 +54,12 @@ Depending on how your computer unzipped the download, your path may have one mor
 | Docker Desktop (Docker Engine on Linux) | https://www.docker.com/products/docker-desktop/ | Runs model-written code in a sealed container. |
 | Git | https://git-scm.com/downloads | Records your work and submits it. |
 | Visual Studio Code | https://code.visualstudio.com/ | Reading the code, with a built-in terminal. |
-| A GitHub account | https://github.com/ | Holds your private repository. |
+| A GitHub account | https://github.com/ | Holds your public repository, which is what you submit. |
 | An OpenAI API account with prepaid credit | https://platform.openai.com/ | Access to the two models you compare. |
-| A way to make a PDF | Word, Google Docs, or a Markdown editor | Your report. |
 
 Your computer needs:
 
-- **Windows:** 64-bit Windows 11, or Windows 10 version 22H2, with at least 8 GB of memory and hardware virtualization turned on. Section 3 shows how to check.
-- **macOS:** one of the three most recent versions of macOS, on Apple silicon or Intel, with at least 4 GB of memory.
-- **Linux:** a current 64-bit distribution supported by Docker Engine.
-- Several gigabytes of free disk space, and permission to install software.
+Docker
 
 The API account is the only part that costs money. OpenAI's smallest credit purchase is $5, and at the prices OpenAI listed in September 2026 the whole experiment uses well under one dollar of it.
 
@@ -185,18 +183,20 @@ git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 ```
 
+Your repository will be public, and every commit shows this email address. To keep your address private, use the no-reply address GitHub gives you under Settings, then Emails.
+
 ### Visual Studio Code
 
 Install VS Code from https://code.visualstudio.com/. Open the repository with File, then Open Folder, and choose the `cs690-a1-controlled-eval` folder. If VS Code asks whether you trust the authors of the files, choose Yes. If it suggests the Python extension, install it.
 
 From now on you can run every command in VS Code's terminal (Terminal, then New Terminal), which opens in the repository folder.
 
-## 5. Put the code in your private GitHub repository
+## 5. Put the code in a public GitHub repository
 
-You will submit a link to a private GitHub repository. Create it now, before you run anything, so that your commits and ledger entries record the work as you do it.
+You will submit a link to a public GitHub repository. Create it now, before you run anything, so that your commits record the work as you do it.
 
 1. Sign in to GitHub and open https://github.com/new.
-2. Name the repository, for example `cs690-a1`, and choose **Private**. Do not add a README, a .gitignore file, or a license, because this folder already has what it needs. Click Create repository.
+2. Name the repository, for example `cs690-a1`, and choose **Public**. Do not add a README, a .gitignore file, or a license, because this folder already has what it needs. Click Create repository.
 3. Copy the HTTPS address that GitHub shows. It looks like `https://github.com/YOUR-USERNAME/cs690-a1.git`.
 4. In the terminal, from the repository folder, run these commands one at a time. Use your own address in the fifth command.
 
@@ -210,7 +210,6 @@ You will submit a link to a private GitHub repository. Create it now, before you
    ```
 
 5. Reload the repository page on GitHub. You should see the files.
-6. Give the instructor access. On the repository page, open Settings, then Collaborators, choose Add people, and enter the instructor's GitHub username from Canvas.
 
 **Signing in when you push.** GitHub does not accept your account password in a terminal.
 
@@ -220,9 +219,9 @@ You will submit a link to a private GitHub repository. Create it now, before you
 
 On Windows, `git add` may print warnings that contain `LF will be replaced by CRLF`. They are harmless.
 
-Commit and push as you work; sections 7 and 13 say when. The repository link you submit must show the final commit you want graded.
+Commit and push as you work; sections 7, 13, and 14 say when. The repository link you submit must show all of your finished work.
 
-**Never commit an API key.** Not in a file, a prompt, `LEDGER.md`, or a commit message. If a key ever ends up somewhere it should not be, delete it on the OpenAI website immediately and create a new one.
+**Never commit an API key.** Your repository is public, so anyone can read everything in it. Keep the key out of every file, prompt, and commit message. If a key ever ends up somewhere it should not be, delete it on the OpenAI website immediately and create a new one.
 
 ## 6. Create the Python environment
 
@@ -341,7 +340,7 @@ Three habits help:
 - In VS Code, hold Ctrl (Cmd on a Mac) and click a function name to jump to where it is defined.
 - Follow the `import` lines. For example, `from .sandbox import run_source` near the top of `grader.py` tells you that the grader relies on the sandbox. Tracing these lines is how you follow an attempt through the harness.
 
-The table "How the repository connects to Week 2" in the handout shows which lecture slide each part puts into practice.
+The table "How the repository connects to Week 3" in the handout shows which lecture slide each part puts into practice.
 
 ## 10. Get your OpenAI API key and set it
 
@@ -381,7 +380,7 @@ python -c "import os; print('key is set' if os.environ.get('OPENAI_API_KEY') els
 
 **The key lasts only until you close that terminal window.** In a new window, set it again. That is deliberate.
 
-Never print the key with `echo`, and never paste it into your report, your ledger, a prompt, or a chat window. If it leaks, delete it on the API keys page and create a new one.
+Never print the key with `echo`, and never paste it into your report, a prompt, or a chat window. If it leaks, delete it on the API keys page and create a new one.
 
 If the instructor gives the whole class an Anthropic configuration instead, set `ANTHROPIC_API_KEY` the same way, with a key from https://console.anthropic.com.
 
@@ -431,7 +430,7 @@ summaries: results/experiment/summary_A.json, results/experiment/summary_B.json
 
 **Change nothing** in the code, `conditions.json`, the problem file, or any file the runner writes. The runner refuses to continue if the configuration changes after results exist.
 
-When the run is complete, open the Usage page of your OpenAI account and write down the dollars spent. The page can take a while to update.
+When the run is complete, open the Usage page of your OpenAI account and write down the dollars spent, for the Part 4 table of your report. The page can take a while to update.
 
 ## 13. What the run produces, and committing it
 
@@ -468,17 +467,37 @@ git status
 
 The last command should report that there is nothing to commit. Then open your repository on GitHub and check that `results/experiment/` is there.
 
-## 14. Write the report and the ledger, then submit
+## 14. Write your report and submit your repository link
 
-- **Report:** use `REPORT_TEMPLATE.md` as the outline for your PDF, and take every number from the two summary files, not from what scrolled past in the terminal.
-- **Ledger:** delete the sample entry in `LEDGER.md` and add your own entries as you finish each piece of work, as Part 6 of the handout describes. If you use an AI tool, save the prompts you gave it in `prompts/ai-use/` and refer to those files in your ledger.
-- **Submit:** commit and push everything, run `git status` to confirm that nothing is left, and turn in the PDF and your repository link on Canvas.
+You write all of your answers in one file, `REPORT_TEMPLATE.md`, which is already in your repository. Open it in VS Code and fill in every part, following the handout:
 
-The handout gives the full requirements for each part.
+- **Top:** your name, your repository link, and the short SHA of the commit that added your results. Run `git log --oneline` to list your commits with their short SHAs. A commit cannot contain its own SHA, so the results commit is the one to give.
+- **Part 1:** the five `OK` lines from section 7.
+- **Part 2:** the last line from section 8, and your answers to Q1 to Q5.
+- **Part 4:** the results table, with every number taken from the two summary files (section 13), and your memo. In the table, type each value between the `|` characters of its row.
+- **Part 5:** your benchmark note.
+
+To see the file formatted as it will appear on GitHub, open the preview with Ctrl+Shift+V (Cmd+Shift+V on a Mac).
+
+Then submit:
+
+1. Save the file, then commit and push it:
+
+   ```text
+   git add REPORT_TEMPLATE.md
+   git commit -m "Report"
+   git push
+   git status
+   ```
+
+   The last command should report that there is nothing to commit.
+
+2. Open your repository link in a private or incognito browser window, where you are not signed in to GitHub. You should see your files, including `results/experiment/` and your filled-in `REPORT_TEMPLATE.md`. If GitHub shows a page-not-found message instead, the repository is not public: on the repository page, open Settings, and under Danger Zone choose Change visibility, then Public.
+3. Submit the repository link on Canvas. No PDF or other file is needed.
 
 ## What you must not change
 
-This is a replication. Your results mean something only if you ran exactly what everyone else ran, so leave all of these as distributed:
+This is a replication. Your results mean something only if you ran exactly what everyone else ran. The only file you edit is `REPORT_TEMPLATE.md`. Leave all of these as distributed:
 
 - the code in `harness/` and `tests/`;
 - `conditions.json`, `tasks/cs690_eval20.json`, `Dockerfile`, and `pyproject.toml`;
