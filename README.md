@@ -1,10 +1,8 @@
 # CS 690 Assignment 1: Controlled Evaluation Harness
 
-This repository holds the complete evaluation harness for Assignment 1. What you submit, and how it is graded, is described in `A1_HANDOUT.md`, which came in the same download. This file tells you how to install everything, how to run every command, and how to read the code.
+Please Read the A1_HANDOUT.md for Assignment description then followed by this readme.
 
-Read this file from top to bottom before you run anything. The steps are in the order you need them.
-
-If you are stuck on installation for more than about thirty minutes, stop and contact the instructor with the exact error message. Setup problems are normal on a first assignment, and they are much quicker to solve together.
+If you are stuck on installation for more than about thirty minutes, stop and contact me with the exact error message. Setup problems are normal on a first assignment, and they are much quicker to solve together.
 
 ## What you will do with this repository
 
@@ -125,7 +123,7 @@ The harness runs every piece of model-written code inside a Docker container: a 
 
 ### Windows
 
-1. Check that virtualization is on. Open Task Manager, choose Performance, then CPU, and find the line "Virtualization". If it says Disabled, it has to be turned on in your computer's BIOS or UEFI settings. Search the web for your laptop model and "enable virtualization", or ask the instructor.
+1. Check that virtualization is on. Open Task Manager, choose Performance, then CPU, and find the line "Virtualization". If it says Disabled, it has to be turned on in your computer's BIOS or UEFI settings. Search the web for your laptop model and "enable virtualization", or ask me.
 2. Download Docker Desktop from https://www.docker.com/products/docker-desktop/ and run the installer with its default choices, including the WSL 2 option. The default per-user installation does not need administrator rights, but turning on WSL 2 for the first time does, and Windows may ask you to restart.
 3. If Docker Desktop reports that WSL is missing or out of date, open PowerShell as administrator (right-click PowerShell, then Run as administrator) and run `wsl --update`, or `wsl --install` if WSL is not installed at all. Restart when asked.
 
@@ -382,8 +380,6 @@ python -c "import os; print('key is set' if os.environ.get('OPENAI_API_KEY') els
 
 Never print the key with `echo`, and never paste it into your report, a prompt, or a chat window. If it leaks, delete it on the API keys page and create a new one.
 
-If the instructor gives the whole class an Anthropic configuration instead, set `ANTHROPIC_API_KEY` the same way, with a key from https://console.anthropic.com.
-
 ## 11. Check the plan before you spend anything
 
 ```text
@@ -503,7 +499,7 @@ This is a replication. Your results mean something only if you ran exactly what 
 - `conditions.json`, `tasks/cs690_eval20.json`, `Dockerfile`, and `pyproject.toml`;
 - every file the harness writes under `results/` and `prompts/a1-controlled-eval-fall2026/`.
 
-The harness enforces much of this itself. It stops if the problem file changes, if any fixed setting in `conditions.json` changes, or if the configuration changes after results were written. If something fails and running the command again does not fix it, contact the instructor instead of working around it.
+The harness enforces much of this itself. It stops if the problem file changes, if any fixed setting in `conditions.json` changes, or if the configuration changes after results were written. If something fails and running the command again does not fix it, contact me instead of working around it.
 
 ## Troubleshooting
 
@@ -540,5 +536,5 @@ Find the message you see, then apply the fix.
 - **`OPENAI_API_KEY is not set`.** The key was set in a different terminal window, or the window was closed. Set it again (section 10).
 - **`API generation failed after 3 attempts`, with `401` in the message.** The key is wrong or was deleted. Create a new key and set it again.
 - **The same message with `429`, or with a mention of quota or credit.** The account has no credit yet, or the first payment is still processing. Check the Billing page, wait a few minutes, and run the same command again.
-- **The same message with `404`, or saying that the model does not exist.** Check that `conditions.json` is unchanged. If it is, contact the instructor.
+- **The same message with `404`, or saying that the model does not exist.** Check that `conditions.json` is unchanged. If it is, contact me.
 - **The run stopped partway for any other reason.** Run the same command again. It resumes where it stopped. If the same error keeps coming back, contact the instructor with the last few lines of the output.
