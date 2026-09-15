@@ -2,11 +2,11 @@
 
 **Total: 100 points. Individual assignment.**
 
-Lecture this assignment builds on: Week 2, Foundations: Large Language Models for Code.
+This assignment builds on: Week 3, Foundations: Large Language Models for Code.
 
 ## Why this assignment exists
 
-You have all seen claims like "this model scores 73 percent at coding." A number like that sounds like a fact about the model, the way height is a fact about a person. The Week 2 lecture argued that it is not. A score depends on which problems were asked, how they were worded, which settings were sent, how many attempts were allowed, how the answers were checked, and the date of the run. Change any of those and the number moves. The model is only one part of the result.
+You have all seen claims like "this model scores 73 percent at coding." A number like that sounds like a fact about the model, the way height is a fact about a person. The Week 3 lecture argued that it is not. A score depends on which problems were asked, how they were worded, which settings were sent, how many attempts were allowed, how the answers were checked, and the date of the run. Change any of those and the number moves. The model is only one part of the result.
 
 In this assignment you see that for yourself, on your own computer. You are given a complete, working evaluation harness, the kind of script described on the slide "Putting it together: your harness." You run it to compare two models on the same 20 small Python problems, and then you decide what the numbers do and do not allow you to say.
 
@@ -22,26 +22,37 @@ The slide "What you should be able to do by the end" promised that everything on
 All of the code is written, commented, and tested. You will not write or change any code. Your work has three parts:
 
 1. **Reproduce.** Install the tools, then rerun the verification check, the test suite, and the experiment exactly as provided.
-2. **Understand.** Read the code until you can explain what each file does, how the files connect, and which Week 2 idea each part puts into practice.
+2. **Understand.** Read the code until you can explain what each file does, how the files connect, and which Week 3 idea each part puts into practice.
 3. **Interpret.** Report what your results show and, just as important, what they do not show.
+
+You write all of your answers in one file, `REPORT_TEMPLATE.md`, inside your repository. It is the only file you edit.
 
 Your numbers will not match a classmate's exactly. Both models are sampled at temperature 1.0 with no seed, so every run draws different answers. That is expected, and explaining why is part of the assignment.
 
+## Everything you will do, in order
+
+1. Install the tools, create a public GitHub repository, and set up Python (README sections 1 to 6).
+2. Run the verification command and commit its record (Part 1).
+3. Run the tests, read the code, and answer Q1 to Q5 (Part 2).
+4. Run the experiment and commit its results (Part 3).
+5. Fill in the results table and write a short memo (Part 4).
+6. Write a short note about one public benchmark (Part 5).
+7. Push everything and submit your repository link on Canvas (Part 6).
+
 ## Why we start with replication
 
-- **A result you cannot repeat is a result you cannot defend.** The slide "Why you have to write down what you ran" makes this point. Rerunning an experiment someone else built is the first check on any result, and it is a habit this course relies on all semester.
-- **It moves you from asking to measuring.** Most of you have used these tools only through a chat window. The slide "Why the homework uses code, not the website" lists what code gives you: a loop instead of retyping, settings written into every request, a file anyone can rerun, token counts on every call, and a fair comparison where one line changes. This harness does each of those things, and you will see where.
+- **It moves you from asking to measuring.** Most of you have used these tools only through a chat window. But code gives you: a loop instead of retyping, settings written into every request, a file anyone can rerun, token counts on every call, and a fair comparison where one line changes. This harness does each of those things, and you will see where.
 - **Later work builds on it.** Later assignments and the semester project ask you to change and extend a harness like this one. You need to be able to run one and read one first.
-- **The setup carries forward.** Python, Docker, Git, an API key, and the provenance ledger are your working environment for the rest of the course. Getting them working now, with nothing else to worry about, is deliberate.
+- **The setup carries forward.** Python, Docker, Git, and an API key are your working environment for the rest of the course. Getting them working now, with nothing else to worry about, is deliberate.
 
-## How the repository connects to Week 2
+## How the repository connects to Week 3
 
-| Week 2 idea (slide title) | Where it lives in the repository |
+| Week 3 idea (slide title) | Where it lives in the repository |
 | --- | --- |
 | "The same request, two ways," "What you send," "What comes back" | `harness/provider.py` sends each request and keeps the answer, the returned model version, the token usage, and the stop reason. |
 | "A model name is not enough" | Every row of `results/experiment/raw_results.jsonl` records the requested model, the version string the API returned, the settings, and the date. |
 | "Rule 2: temperature, the randomness dial" and "Settings to start from" | `conditions.json` sends temperature 1.0 to both models and asks for three attempts per problem, so the attempts differ on purpose. |
-| "What a run record has to contain" | The rows of `raw_results.jsonl`, together with the entries you write in `LEDGER.md`. |
+| "What a run record has to contain" | The rows of `results/experiment/raw_results.jsonl`, together with `results/experiment/manifest.json`, which records the problem set and the configuration. |
 | "One run tells you very little," "pass@k, worked through," "The version people get wrong" | `pass_at_k` in `harness/metrics.py`. |
 | "One number is still not a result" and "Where that range comes from" | `bootstrap_task_ci` in `harness/metrics.py`. |
 | "What more attempts cannot fix" and "What that means for your own work" | The frozen tests in `tasks/cs690_eval20.json` decide every verdict, so every score measures the models and those tests together. |
@@ -58,7 +69,7 @@ The repository `cs690-a1-controlled-eval` contains:
 - `conditions.json`, which fixes the two model conditions and every setting;
 - the test suite in `tests/`;
 - `README.md`, which walks you through installation and every command, step by step;
-- `REPORT_TEMPLATE.md` and `LEDGER.md`.
+- `REPORT_TEMPLATE.md`, the file where you write your answers.
 
 `CS690-Eval20` was written for this course. It is not a public benchmark, and the course makes no claim that its problem types are new or absent from model training data. Its purpose is to give every student the same frozen measurement surface.
 
@@ -66,9 +77,8 @@ The repository `cs690-a1-controlled-eval` contains:
 
 - A 64-bit computer on which you can install software: Windows 11, or Windows 10 version 22H2; one of the three most recent versions of macOS; or Linux. Docker needs at least 8 GB of memory on Windows and 4 GB on a Mac, hardware virtualization turned on, and several gigabytes of free disk space.
 - Python 3.14, Docker Desktop (Docker Engine on Linux), Git, and a code editor. Visual Studio Code is a good free choice. Any Python from 3.11 through 3.14 works. Python 3.15 does not work with this harness yet, because a library it depends on has not caught up.
-- A GitHub account for your private repository.
+- A GitHub account. The repository you create for this assignment is public, so anyone can read it.
 - An OpenAI API account with prepaid credit. A ChatGPT subscription does not include API use. OpenAI's smallest credit purchase is $5, and at the prices OpenAI listed in September 2026 the full experiment uses well under one dollar of it.
-- A way to produce a PDF, such as Word, Google Docs, or a Markdown editor.
 
 `README.md` section 1 lists where to get each one.
 
@@ -77,7 +87,7 @@ The repository `cs690-a1-controlled-eval` contains:
 ### Part 1. Set up and verify the environment
 
 1. Read `README.md` from start to finish before you run anything.
-2. Follow README sections 1 through 6: install the tools, create your private repository, and create the Python environment.
+2. Follow README sections 1 through 6: install the tools, create your public repository, and create the Python environment.
 3. Start Docker, then run the verification command from README section 7:
 
    ```text
@@ -85,7 +95,7 @@ The repository `cs690-a1-controlled-eval` contains:
    ```
 
 4. Confirm that it prints five `OK` lines: 20 tasks loaded, the dataset fingerprint matched, code ran inside the Docker sandbox, the network probe was blocked, and `results/verification.json` was written.
-5. Commit `results/verification.json`. Paste the five `OK` lines into Part 1 of your report.
+5. Commit `results/verification.json`, and paste the five `OK` lines into Part 1 of `REPORT_TEMPLATE.md`.
 
 ### Part 2. Run the tests and read the code
 
@@ -95,7 +105,7 @@ The repository `cs690-a1-controlled-eval` contains:
    pytest -q
    ```
 
-   The expected result is `20 passed`. If the summary says `2 skipped`, Docker was not found; fix that and run the tests again. Paste the final summary line into your report.
+   The expected result is `20 passed`. If the summary says `2 skipped`, Docker was not found; fix that and run the tests again. Paste the final summary line into Part 2 of `REPORT_TEMPLATE.md`.
 
 2. Read the code in the order given in README section 9, "How the code fits together." Every file begins with a comment that explains its job and how it connects to the others.
 
@@ -107,11 +117,11 @@ The repository `cs690-a1-controlled-eval` contains:
 
    It prints `0.30000000000000004 0.9166666666666666`. These are the two values from the slide "pass@k, worked through": pass@1 = 0.30 and pass@5 = 11/12. The extra digits at the end of the first value are ordinary rounding in how computers store decimal numbers, not an error.
 
-4. Answer the five questions below in your report. Write in your own words, about 75 to 150 words each, and base every answer on the code in this repository. Name the files and functions you describe.
+4. Answer the five questions below in Part 2 of `REPORT_TEMPLATE.md`. Write in your own words, about 75 to 150 words each, and base every answer on the code in this repository. Name the files and functions you describe.
 
 **Q1. The path of one attempt.** Start from one task in `tasks/cs690_eval20.json` and describe each step until its result becomes one row in `results/experiment/raw_results.jsonl`. Name the file and function responsible for each step. Explain why the generated code runs inside the Docker sandbox rather than directly on your computer.
 
-**Q2. What is sent and what comes back.** List the settings every request sends, using `conditions.json` and `harness/provider.py`, and say in one sentence what each one controls, using the Week 2 definitions. Then list what the harness keeps from each reply. Explain why the requested model name alone would not identify what answered you.
+**Q2. What is sent and what comes back.** List the settings every request sends, using `conditions.json` and `harness/provider.py`, and say in one sentence what each one controls, using the Week 3 definitions. Then list what the harness keeps from each reply. Explain why the requested model name alone would not identify what answered you.
 
 **Q3. Same prompt, different answers.** Both conditions use temperature 1.0 and ask for three attempts per problem. Explain why the three attempts on one problem can differ, and why that is intended in this experiment. Then name the files and fields the harness records so that someone else could rerun your experiment and check your work.
 
@@ -137,13 +147,13 @@ The repository `cs690-a1-controlled-eval` contains:
    ```
 
 4. If the run stops partway, run the same command again. It picks up where it stopped and does not pay again for finished work. Do not delete anything in `results/`.
-5. Do not change any code, `conditions.json`, the task file, or any file the runner creates. In a replication, an unexplained change makes the result meaningless. If something fails and rerunning does not fix it, contact the instructor instead of working around it. If the instructor distributes a replacement `conditions.json` to the whole class, use that file.
-6. Commit everything the run created under `results/` and `prompts/`.
-7. Write down the dollars you spent, from the Usage page of your OpenAI account.
+5. Do not change any code, `conditions.json`, the task file, or any file the runner creates. In a replication, an unexplained change makes the result meaningless. If something fails and rerunning does not fix it, contact me instead of working around it. If a replacement `conditions.json` to the whole class, use that file.
+6. Commit and push everything the run created under `results/` and `prompts/` (README section 13).
+7. Write down the dollars you spent, from the Usage page of your OpenAI account. They go in the Part 4 table.
 
 ### Part 4. Interpret the results
 
-Use `REPORT_TEMPLATE.md`. Take every number from `results/experiment/summary_A.json` and `results/experiment/summary_B.json`, not from the console.
+Fill in Part 4 of `REPORT_TEMPLATE.md`. Take every number from `results/experiment/summary_A.json` and `results/experiment/summary_B.json`, not from the console. README section 13 shows which summary field goes in which column.
 
 Your table must contain, for each condition:
 
@@ -168,67 +178,43 @@ Overlapping intervals are not a formal significance test, and you are not asked 
 
 ### Part 5. Read a published score: the four questions
 
-Write 300 to 400 words applying the four questions from the slide "What a benchmark is, and how to read one" to exactly one public benchmark from the lecture: HumanEval, MBPP, LiveCodeBench, or SWE-bench.
+In Part 5 of `REPORT_TEMPLATE.md`, write 300 to 400 words applying the four questions from the slide "What a benchmark is, and how to read one" to exactly one public benchmark from the lecture: HumanEval, MBPP, LiveCodeBench, or SWE-bench.
 
 1. What does it measure? State it as a task.
 2. What does it not measure that a software project may depend on?
 3. How can a reported score rise without the underlying model becoming better?
 4. Could the model have seen the answers already? State the contamination status or risk based on evidence, not assumption.
 
-Use the benchmark's primary paper, listed on the Week 2 References slide, or its official documentation for the task definition. Cite evidence for any contamination, saturation, or current-status claim, date any current-status source, and write each claim at the strength the slide "Saying it at the right strength" describes. Do not run the benchmark. End with at least one sentence explaining why its published score is not interchangeable with your `CS690-Eval20` result.
+Use the benchmark's primary paper, listed on the Week 3 References slide, or its official documentation for the task definition. Cite evidence for any contamination, saturation, or current-status claim, date any current-status source, and write each claim at the strength the slide "Saying it at the right strength" describes. Do not run the benchmark. End with at least one sentence explaining why its published score is not interchangeable with your `CS690-Eval20` result.
 
-### Part 6. Ledger and submission
+### Part 6. Submit
 
-1. Delete the marked sample entry in `LEDGER.md`.
-2. Write a ledger entry at the time you do the work, not afterward, for each of the following:
-   - environment setup and the verification run;
-   - the test run;
-   - the experiment, with the three extra experiment fields, and the dollars you spent in the `result` field;
-   - each part of the report for which you used an AI tool.
-3. The runner already saved the exact experiment prompts under `prompts/`. If you use an AI tool while working on this assignment, save the prompts you gave it in a folder of your own under `prompts/`, for example `prompts/ai-use/`, and reference those files in your ledger.
-4. Export your report as one PDF.
-5. Run `git status` and confirm that nothing is left uncommitted. The repository must contain the unchanged code, `results/verification.json`, everything under `results/experiment/`, everything under `prompts/`, and `LEDGER.md`.
+1. Check that every part of `REPORT_TEMPLATE.md` is filled in. At the top, give your name, your repository link, and the short SHA of the commit that added your experiment results. `git log --oneline` lists your commits with their short SHAs. A commit cannot contain its own SHA, so the results commit is the one to give.
+2. Commit and push, then run `git status` and confirm that nothing is left uncommitted.
+3. Open your repository link in a private or incognito browser window, where you are not signed in to GitHub. If you can see your files, including `results/experiment/` and your filled-in `REPORT_TEMPLATE.md`, the repository is public and ready. README section 14 explains what to do if it is not.
+4. Submit the repository link on Canvas.
 
 ## Deliverables
 
-1. Your private repository, created from the provided code, with the code unchanged, containing `results/verification.json`, the complete `results/experiment/` folder, the `prompts/` folder, and your completed `LEDGER.md`. A repository with an empty `results/experiment/` folder cannot be graded.
-2. One PDF containing the Part 1 verification lines, the Part 2 test summary line and answers to Q1 through Q5, the Part 4 table and memo, and the Part 5 benchmark note.
+One public GitHub repository, created from the provided code, containing:
+
+- the code, unchanged;
+- `results/verification.json`;
+- the complete `results/experiment/` folder;
+- the `prompts/` folder;
+- `REPORT_TEMPLATE.md`, with every part filled in.
+
+A repository with an empty `results/experiment/` folder cannot be graded.
 
 ## Turn-in instructions
 
-Submit through Canvas exactly these two items:
+Submit one item through Canvas: the link to your public GitHub repository. No PDF or other file is needed, because everything is graded from the repository. Push all of your work before the deadline.
 
-1. The PDF.
-2. A link to your private repository.
-
-The repository link must point to the final commit you want graded. This is an individual assignment: do not submit, or substitute results from, your team project repository.
+This is an individual assignment: do not submit, or substitute results from, your team project repository.
 
 ## AI policy
 
-AI tools are permitted and expected on this assignment. You must submit a provenance ledger recording which tools you used, a summary of what you asked them, and what review actions you took on the output. Submitting AI-generated work you have not reviewed is misrepresentation of authorship and is treated as an academic-integrity violation under the course syllabus, as is fabricating ledger entries. You are responsible for every line you submit, including lines you did not type. You may be asked in class to explain any part of your submission.
-
-## Provenance ledger requirements
-
-Use the following schema exactly for each reviewable change:
-
-```text
-## Entry <n>
-artifact:  what this entry covers: a file, a commit SHA, a document, or an experiment
-tool:      product name, model name, model version, and the date of use
-prompts:   one-line summary each; the verbatim prompts live in prompts/ and are
-           referenced here by file path
-review:    what you read, what you changed, what you rejected, and why
-checks:    the commands you ran and their results
-evidence:  the requirement, test, or evidence ID this traces to
-risk:      what remains unverified after this change
-
-For an experiment, add three fields:
-dataset:   task set identifier and its commit SHA or version
-result:    metric, N, and the result table or its file path
-changed:   what you did differently as a result
-```
-
-An entry is written when the work is done, not reconstructed at submission time. A ledger that is one entry per session rather than one per reviewable change is wrong.
+AI tools are permitted on this assignment. You are responsible for every answer you submit, including any text an AI tool drafted for you, and for checking that it is correct and matches the code in this repository. Submitting AI-generated work you have not reviewed is misrepresentation of authorship and is treated as an academic-integrity violation under the course syllabus. You may be asked in class to explain any part of your submission.
 
 ## Rubric summary
 
